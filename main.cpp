@@ -118,7 +118,7 @@ static void init()
       /* テクスチャ画像の読み込み */
       fread(texture, 128 * 128 * 4, 1, fp);
       fclose(fp);
-      
+
       /* キューブマッピングのテクスチャの割り当て */
       glTexImage2D(target[i], 0, GL_RGBA, 128, 128, 0, 
         GL_RGBA, GL_UNSIGNED_BYTE, texture);
