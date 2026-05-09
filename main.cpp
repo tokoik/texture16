@@ -90,7 +90,7 @@ static void init()
   /* テクスチャユニット０のテクスチャ環境 */
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-  /* ２つ目のテクスチャにはキューブマップを割り当てる*/
+  /* ２つ目のテクスチャにはキューブマップを割り当てる */
   glActiveTexture(GL_TEXTURE1);
   glBindTexture(GL_TEXTURE_CUBE_MAP, texname[1]);
 
