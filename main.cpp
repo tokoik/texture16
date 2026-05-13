@@ -37,7 +37,6 @@ static const GLfloat lightamb[] = { 0.1f, 0.1f, 0.1f, 1.0f }; /* 環境光強度
 #define TEXWIDTH  256                               /* テクスチャの幅　　　 */
 #define TEXHEIGHT 256                               /* テクスチャの高さ　　 */
 static const char texture_file[] = "dot.raw";       /* テクスチャファイル名 */
-static GLuint texname[2];                           /* テクスチャ名（番号） */
 
 /*
 ** 初期化
@@ -66,9 +65,10 @@ static void init()
 #endif
 
   /* テクスチャ名を２つ作る */
+  GLuint texname[2];
   glGenTextures(2, texname);
 
-  /* １つ目のテクスチャ名には２次元テクスチャを割り当てる */
+  /* １つ目のテクスチャユニットには２次元テクスチャを割り当てる */
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, texname[0]);
 
@@ -84,13 +84,10 @@ static void init()
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-  /* 無名テクスチャに戻しておく */
-  glBindTexture(GL_TEXTURE_2D, 0);
-
   /* テクスチャユニット０のテクスチャ環境 */
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-  /* ２つ目のテクスチャにはキューブマップを割り当てる */
+  /* ２つ目のテクスチャユニットにはキューブマップを割り当てる */
   glActiveTexture(GL_TEXTURE1);
   glBindTexture(GL_TEXTURE_CUBE_MAP, texname[1]);
 
@@ -138,9 +135,6 @@ static void init()
   glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP);
   glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP);
 
-  /* 無名テクスチャに戻しておく */
-  glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-
   /* テクスチャユニット１のテクスチャ環境 */
   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
   glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_INTERPOLATE);
@@ -177,14 +171,12 @@ static void scene()
 
   /* テクスチャユニット０を有効にする */
   glActiveTexture(GL_TEXTURE0);
-  glBindTexture(GL_TEXTURE_2D, texname[0]);
 
   /* テクスチャマッピング開始 */
   glEnable(GL_TEXTURE_2D);
 
   /* テクスチャユニット１を有効にする */
   glActiveTexture(GL_TEXTURE1);
-  glBindTexture(GL_TEXTURE_CUBE_MAP, texname[1]);
 
   /* キューブマッピング開始 */
   glEnable(GL_TEXTURE_CUBE_MAP);
