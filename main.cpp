@@ -169,13 +169,13 @@ static void scene()
   /* 材質の設定 */
   glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, color);
 
-  /* テクスチャユニット０を有効にする */
+  /* テクスチャユニット０をアクティブにする */
   glActiveTexture(GL_TEXTURE0);
 
   /* テクスチャマッピング開始 */
   glEnable(GL_TEXTURE_2D);
 
-  /* テクスチャユニット１を有効にする */
+  /* テクスチャユニット１をアクティブにする */
   glActiveTexture(GL_TEXTURE1);
 
   /* キューブマッピング開始 */
