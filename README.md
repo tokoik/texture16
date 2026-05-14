@@ -15,51 +15,44 @@
 ### 2.1 Windows (Visual Studio 2022 の場合)
 
 1. コマンドプロンプトまたは PowerShell を開き、このプロジェクトのディレクトリに移動します。
-
 2. 以下のコマンドを実行してビルドディレクトリを作成し、CMake で構成を行います。
 
-```bat
-mkdir build
-cd build
-cmake .. -G "Visual Studio 17 2022"
-```
+   ```bat
+   mkdir build
+   cd build
+   cmake .. -G "Visual Studio 17 2022"
+   ```
 
 3. 生成された build フォルダ内の texture16.sln を Visual Studio で開きます。
-
 4. ソリューションエクスプローラーで texture16 プロジェクトを右クリックし、「スタートアップ プロジェクトに設定」を選択します。
-
 5. 「ローカル Windows デバッガー」をクリックするか、F5 キーを押してビルドおよび実行します。
 
 ### 2.2 macOS (Xcode の場合)
 
 1. ターミナルを開き、このプロジェクトのディレクトリに移動します。
-
 2. 以下のコマンドを実行してビルドディレクトリを作成し、Xcode 用のプロジェクトを生成します。
 
-```sh
-mkdir build
-cd build
-cmake .. -G Xcode
-```
+   ```sh
+   mkdir build
+   cd build
+   cmake .. -G Xcode
+   ```
 
 3. 生成された build/texture16.xcodeproj を Xcode で開きます。
-
 4. 左上のスキーム選択（再生ボタンの横）が texture16 になっていることを確認します。
-
 5. 「Run」ボタン（再生ボタン）をクリックするか、Command + R を押してビルドおよび実行します。
 
 ### 2.3 Ubuntu Linux
 
 1. ターミナルを開き、このプロジェクトのディレクトリに移動します。
-
 2. 必要なパッケージ（freeglut3-dev や pkg-config など）がインストールされていることを確認し、以下のコマンドでビルドします。
 
-```sh
-mkdir build
-cd build
-cmake ..
-make
-```
+   ```sh
+   mkdir build
+   cd build
+   cmake ..
+   make
+   ```
 
 ## 3. 使い方
 
@@ -69,25 +62,25 @@ make
 
 - **Windows**
 
-Visual Studio 上で「ローカル Windows デバッガー」をクリックして実行するか、またはコマンドプロンプトから以下のコマンドで起動します。
+  Visual Studio 上で「ローカル Windows デバッガー」をクリックして実行するか、またはコマンドプロンプトから以下のコマンドで起動します。
 
-```cmd
-cd build\Debug
-texture16.exe
-```
+  ```cmd
+  cd build\Debug
+  texture16.exe
+  ```
 
 - **macOS**
 
-Xcode 上で左上の「Run（再生ボタン）」をクリックするのが楽です。これにより texture16.app アプリケーションバンドルとして自動的に実行されます。アプリケーションバンドルを直接起動するなら、Finder から build/Debug/texture16.app をダブルクリックするか、ターミナルから open build/Debug/texture16.app を実行します (この場合はエラーメッセージ等が表示されません)。
+  Xcode 上で左上の「Run（再生ボタン）」をクリックするのが楽です。これにより texture16.app アプリケーションバンドルとして自動的に実行されます。アプリケーションバンドルを直接起動するなら、Finder から build/Debug/texture16.app をダブルクリックするか、ターミナルから open build/Debug/texture16.app を実行します (この場合はエラーメッセージ等が表示されません)。
 
 - **Ubuntu Linux**
 
-ターミナルから以下のコマンドで実行ファイル（バイナリ）を直接起動します。
+  ターミナルから以下のコマンドで実行ファイル（バイナリ）を直接起動します。
 
-```sh
-cd build
-./texture16
-```
+  ```sh
+  cd build
+  ./texture16
+  ```
 
 ### 3.2 操作方法
 
@@ -103,10 +96,10 @@ cd build
 
 このプログラムでは2つのテクスチャユニット（0番と1番）を使用します。
 
-1. **ベースのテクスチャ (テクスチャユニット0):**
+1. **ベースのテクスチャ (テクスチャユニット0)**
    `glActiveTexture(` `GL_TEXTURE0` `)` を呼び出してユニット0を指定し、dot.raw (256×256) の画像を 2D テクスチャとして割り当てます。テクスチャ環境は `GL_MODULATE` に設定します。このテクスチャのアルファチャンネル（透明度）が、後の合成で「どのくらい環境を反射するか」のマスクとして利用されます。
 
-2. **キューブマップ (テクスチャユニット1):**
+2. **キューブマップ (テクスチャユニット1)**
    `glActiveTexture(` `GL_TEXTURE1` `)` を呼び出してテクスチャユニット1に切り替えます。環境マッピング用の6枚の画像 (`room2ny.raw` など) を読み込み、`GL_TEXTURE_CUBE_MAP` として割り当てます。
    このユニットに対して、テクスチャ環境を **`GL_COMBINE`** に設定し、`GL_COMBINE_RGB` を **`GL_INTERPOLATE`** (線形補間) に設定します。
    補間の係数となる第3の入力として、以下のように指定します。
@@ -121,14 +114,17 @@ cd build
 
 図形を描画する際には、それぞれのテクスチャユニットに対して個別に機能を有効化（`glEnable()`）する必要があります。
 
-1. **各テクスチャユニットの有効化:**
+1. **各テクスチャユニットの有効化**
+
    まず `glActiveTexture(` `GL_TEXTURE0` `)` を呼び出して `GL_TEXTURE_2D` を有効にします。
    次に `glActiveTexture(` `GL_TEXTURE1` `)` を呼び出して `GL_TEXTURE_CUBE_MAP` とテクスチャ座標の自動生成 (`GL_TEXTURE_GEN_S`, `GL_TEXTURE_GEN_T`, `GL_TEXTURE_GEN_R`) を有効にします。
 
-2. **オブジェクトの描画と合成:**
+2. **オブジェクトの描画と合成**
+
    `box(` 1.0, 1.0, 1.0 `)` によって立方体を描画します。頂点には元のドット柄用のテクスチャ座標が設定されており、同時にキューブマッピング用のテクスチャ座標が自動生成されます。これら2つのテクスチャは、先に設定した `GL_COMBINE` と `GL_INTERPOLATE` のルールに従い、ベーステクスチャのアルファ値に基づいたグロスマッピングとして合成・描画されます。
 
-3. **状態の復元:**
+3. **状態の復元**
+
    描画が完了したら、他の描画に影響を与えないよう `glDisable()` を使って、キューブマッピング、テクスチャ座標の自動生成、および 2D テクスチャマッピングを無効化します。
 
 ![マルチテクスチャのレイヤーの配分比を変化させながらアニメーション](https://tokoik.github.io/blog/assets/images/texture16.webp)
