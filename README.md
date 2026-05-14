@@ -131,4 +131,4 @@ cd build
 3. **状態の復元:**
    描画が完了したら、他の描画に影響を与えないよう `glDisable()` を使って、キューブマッピング、テクスチャ座標の自動生成、および 2D テクスチャマッピングを無効化します。
 
-![マルチテクスチャのレイヤーの配分比を変化させながらアニメーション](https://tokoik.github.io/blog/assets/images/texture16.gif)
+![マルチテクスチャのレイヤーの配分比を変化させながらアニメーション](https://tokoik.github.io/blog/assets/images/texture16.webp)
